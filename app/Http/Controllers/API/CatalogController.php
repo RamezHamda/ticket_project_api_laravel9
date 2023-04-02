@@ -17,7 +17,7 @@ class CatalogController extends BaseController
     public function index()
     {
         $catalogs = Catalog::with(['child', 'user'])->latest()->get();
-        $success['catalogs'] = CatalogResource::collection($catalogs);
+        $success = CatalogResource::collection($catalogs);
 
         return $this->sendResponse($success, 'Data Retrieved successfully.');
     }
@@ -31,8 +31,9 @@ class CatalogController extends BaseController
     public function store(CatalogRequest $request)
     {
         // return $request->validated();
+
         $catalog = Catalog::create($request->validated() + ['user_id' => $request->user()->id]);
-        $success['catalog'] = CatalogResource::make($catalog);
+        $success = CatalogResource::make($catalog);
 
         return $this->sendResponse($success, 'Catalog Created Successfully.');
     }
@@ -74,8 +75,8 @@ class CatalogController extends BaseController
     public function destroy(Catalog $catalog)
     {
         $catalog->delete();
-        $success['catalog'] = CatalogResource::make($catalog);
+        // $success['catalog'] = CatalogResource::make($catalog);
 
-        return $this->sendResponse($success, 'Catalog Deleted Successfully.');
+        return $this->sendStatus('Catalog Deleted Successfully.');
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\TicketController;
 use App\Http\Controllers\Api\CatalogController;
 
 /*
@@ -23,11 +24,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function () {
 
-    
-    Route::group([], function () {
+    //middleware(['auth:sanctum'])->
+    Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::apiResource('users', UserController::class);
         Route::apiResource('catalog', CatalogController::class);
+        Route::apiResource('ticket', TicketController::class);
         Route::post('change-password/{user}', [UserController::class, 'changePassword']);
 
     });

@@ -37,8 +37,16 @@ class UserController extends BaseController
      */
     public function store(UserRequest $request)
     {
-       // return $request->validated();
-        $user = User::create($request->validated());
+    //    return $request->validated();
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'user_code' => Str::random(6),
+            'type' => $request->type,
+            'status' => $request->status,
+        ]);
+
         $success['user'] = UserResource::make($user);
 
         return $this->sendResponse($success, 'User Created Successfully.');
@@ -81,9 +89,9 @@ class UserController extends BaseController
     public function destroy(User $user)
     {
         $user->delete();
-        $success['user'] = UserResource::make($user);
+        // $success['user'] = UserResource::make($user);
 
-        return $this->sendResponse($success, 'User Created Successfully.');
+        return $this->sendStatus('User Deleted Successfully.');
     }
 
     public function login(UserLoginRequest $request)

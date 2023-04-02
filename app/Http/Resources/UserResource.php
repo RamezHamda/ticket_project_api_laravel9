@@ -19,8 +19,9 @@ class UserResource extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
+            'password' => Hash::make($this->password),
             'type' => $this->user_type,
-            'status' => $this->status(),
+            'status' => $this->status,
             'user_code' => $this->user_code,
             "created" =>  Carbon::parse($this->created_at)->format('d-m-Y'), // h:i A
         ];

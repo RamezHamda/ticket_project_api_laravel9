@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+// use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
 class User extends Authenticatable
 {
@@ -93,8 +95,15 @@ class User extends Authenticatable
         );
     }
 
-    public function status()
+    // public function status()
+    // {
+    //     return $this->status == 0 ? 'inActive' : 'active';
+    // }
+
+    public function status(): Attribute
     {
-        return $this->status == 0 ? 'inActive' : 'active';
+        return new Attribute(
+            get: fn ($value) => $value == 0 ? 'inActive' : 'active',
+        );
     }
 }

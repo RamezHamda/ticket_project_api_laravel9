@@ -29,4 +29,9 @@ class Ticket extends Model
     {
         return $this->hasMany(Thread::class);
     }
+
+    public function catalog(): BelongsTo
+    {
+        return $this->belongsTo(Catalog::class)->withDefault();
+    }
 }

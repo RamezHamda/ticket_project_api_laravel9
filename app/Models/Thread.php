@@ -27,4 +27,11 @@ class Thread extends Model
     {
         return $this->belongsTo(Catalog::class)->withDefault();
     }
+
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'fw_user_id')->withDefault();
+    }
+
+
 }
